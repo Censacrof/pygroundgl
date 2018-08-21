@@ -5,6 +5,10 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
+#include <pybind11/pybind11.h>
+
+namespace py = pybind11;
+
 Display::Display(int width, int height, std::string windowTitle)
 {
     _isWindowOpen = false;
@@ -106,4 +110,21 @@ void Display::clear(float r, float g, float b, float a)
 {
     glClearColor(r, g, b, a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+
+int add(int a, int b) { return a + b; }
+
+PYBIND11_MODULE(display, m) {
+    // m.def("add", &add, "A function which adds two numbers");
+
+
+    py::class_<Display>(m, "Display")
+        .def(py::init<int, int, std::string>())
+        .def("update", &Display::update)
+        .def("getWidth", &Display::getWidth)
+        .def("getHeight", &Display::getHeight)
+        .def("getRatio", &Display::getRatio)
+        .def("isWindowOpen", &Display::isWindowOpen)
+        .def("clear", &Display::clear);
 }

@@ -29,7 +29,7 @@ public:
     int getHeight() { return _height; }
     float getRatio() { return (float) _width / (float) _height; }
 
-    bool isWindowsOpen() { return _isWindowOpen; }
+    bool isWindowOpen() { return _isWindowOpen; }
 
     void clear(float, float, float, float);
 };
