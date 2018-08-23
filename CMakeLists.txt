@@ -20,5 +20,22 @@ link_libraries(${OPENGL_LIBRARIES})
 
 add_subdirectory(pybind11)
 
-pybind11_add_module(display lib/Display.cpp)
-file(WRITE __init__.py "")
+
+set(LIB_SOURCES
+    ${CMAKE_SOURCE_DIR}/lib/Display.cpp 
+    ${CMAKE_SOURCE_DIR}/lib/Mesh.cpp
+    ${CMAKE_SOURCE_DIR}/lib/Shader.cpp
+)
+
+
+pybind11_add_module(pygroundgl SHARED ${LIB_SOURCES} lib/pybind11_bindings.cpp)
+
+add_library(pygroundgl_cpp ${LIB_SOURCES})
+
+add_executable(Test tests/test.cpp)
+target_link_libraries(Test pygroundgl_cpp)
+add_custom_command(
+    TARGET Test 
+    PRE_BUILD 
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/tests/res $<TARGET_FILE_DIR:Test>/res
+)

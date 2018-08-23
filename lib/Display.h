@@ -25,11 +25,11 @@ public:
     void update();
 
 
-    int getWidth() { return _width; }
-    int getHeight() { return _height; }
-    float getRatio() { return (float) _width / (float) _height; }
+    int getWidth() const { return _width; }
+    int getHeight() const { return _height; }
+    float getRatio() const { return (float) _width / (float) _height; }
 
-    bool isWindowOpen() { return _isWindowOpen; }
+    bool isWindowOpen() const { return _isWindowOpen; }
 
     void clear(float, float, float, float);
 };
