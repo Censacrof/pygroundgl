@@ -25,12 +25,14 @@ set(LIB_SOURCES
     ${CMAKE_SOURCE_DIR}/lib/Display.cpp 
     ${CMAKE_SOURCE_DIR}/lib/Mesh.cpp
     ${CMAKE_SOURCE_DIR}/lib/Shader.cpp
+    ${CMAKE_SOURCE_DIR}/lib/Texture.cpp
 )
 
 
 pybind11_add_module(pygroundgl SHARED ${LIB_SOURCES} lib/pybind11_bindings.cpp)
 
 add_library(pygroundgl_cpp ${LIB_SOURCES})
+
 
 add_executable(Test tests/test.cpp)
 target_link_libraries(Test pygroundgl_cpp)
