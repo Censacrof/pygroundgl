@@ -6,6 +6,9 @@
 
 #include <GL/glew.h>
 
+#include "Transform.h"
+#include "Camera.h"
+
 Shader::Shader(const std::string& fileName)
 {
     _program = glCreateProgram();
@@ -15,14 +18,16 @@ Shader::Shader(const std::string& fileName)
     for (unsigned int i = 0; i < NUM_SHADERS; i++)
         glAttachShader(_program, _shaders[i]);
 
-    glBindAttribLocation(_program, 0, "position");
-    glBindAttribLocation(_program, 1, "textCoord");
+    glBindAttribLocation(_program, 0, "_position");
+    glBindAttribLocation(_program, 1, "_texCoord");
 
     glLinkProgram(_program);
     checkShaderError(_program, GL_LINK_STATUS, true, "Error, shader program linking failed");
 
     glValidateProgram(_program);
     checkShaderError(_program, GL_VALIDATE_STATUS, true, "Error, shader program validation failed");
+
+    _uniforms[TRANSFORM_UNIFORM] = glGetUniformLocation(_program, "_transform");
 }
 
 Shader::~Shader()
@@ -62,10 +67,14 @@ GLuint Shader::createShader(const std::string& text, GLenum shaderType)
 void Shader::bind()
 {
     glUseProgram(_program);
-
-
 }
 
+void Shader::update(const Transform& transform, const Camera& camera)
+{
+    glm::mat4 worldViewMatrix = camera.getViewMatrix() * transform.getWorldMatrix();
+
+    glUniformMatrix4fv(_uniforms[TRANSFORM_UNIFORM], 1, false, &worldViewMatrix[0][0]);
+}
 
 std::string Shader::loadShader(const std::string& fileName)
 {

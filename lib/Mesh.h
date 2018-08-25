@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
+#include <string>
+
 class Vertex
 {
 private:
@@ -28,6 +30,7 @@ private:
     enum {
         POSITION_VB,
         TEXTCOORD_VB,
+        INDEX_VB,
         
         NUM_BUFFERS
     };
@@ -38,7 +41,8 @@ private:
     unsigned int _drawCount;
 
 public:
-    Mesh(Vertex*, unsigned int);
+    Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
+    Mesh(const std::string& fileName);
     ~Mesh();
 
     void draw();

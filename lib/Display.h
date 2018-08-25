@@ -19,7 +19,7 @@ private:
     bool _isWindowOpen;
 
 public:
-    Display(int, int, std::string);
+    Display(int width, int height, std::string windowTitle);
     ~Display();
 
     void update();
@@ -31,7 +31,7 @@ public:
 
     bool isWindowOpen() const { return _isWindowOpen; }
 
-    void clear(float, float, float, float);
+    void clear(float r, float g, float b, float a);
 };
 
 

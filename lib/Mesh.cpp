@@ -1,9 +1,9 @@
 #include "Mesh.h"
 #include <vector>
 
-Mesh::Mesh(Vertex* vertices, unsigned int numVertices)
+Mesh::Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices)
 {
-    _drawCount = numVertices;
+    _drawCount = numIndices;
 
     glewExperimental = GL_TRUE;
     glewInit();
@@ -58,8 +58,20 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices)
         0 //offset of the first component of the first generic vertex attribute in the array
     );
 
-    glBindVertexArray(0); //unset current vertex array buffer
+    //do the same for the INDEX_VB
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vertexArrayBuffers[INDEX_VB]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * sizeof(indices[0]), &indices[0], GL_STATIC_DRAW);
+
+    //unset current vertex array buffer
+    glBindVertexArray(0); 
 }
+
+
+Mesh::Mesh(const std::string& fileName)
+{
+    
+}
+
 
 Mesh::~Mesh()
 {
@@ -70,7 +82,7 @@ void Mesh::draw()
 {
     glBindVertexArray(_vertexArrayObject);
 
-    glDrawArrays(GL_TRIANGLES, 0, _drawCount);
+    glDrawElements(GL_TRIANGLES, _drawCount, GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
 }

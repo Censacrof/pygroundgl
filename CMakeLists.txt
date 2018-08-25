@@ -26,6 +26,8 @@ set(LIB_SOURCES
     ${CMAKE_SOURCE_DIR}/lib/Mesh.cpp
     ${CMAKE_SOURCE_DIR}/lib/Shader.cpp
     ${CMAKE_SOURCE_DIR}/lib/Texture.cpp
+    ${CMAKE_SOURCE_DIR}/lib/Transform.cpp
+    ${CMAKE_SOURCE_DIR}/lib/Camera.cpp
 )
 
 

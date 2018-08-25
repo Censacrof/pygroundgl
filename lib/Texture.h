@@ -10,10 +10,10 @@ private:
     GLuint _texture;
 
 public:
-    Texture(const std::string&);
+    Texture(const std::string& fileName);
     ~Texture();
 
-    void bind(unsigned int);
+    void bind(unsigned int unit);
 
 
 };

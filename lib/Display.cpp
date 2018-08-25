@@ -71,8 +71,8 @@ Display::Display(int width, int height, std::string windowTitle)
     glEnable(GL_DEPTH_TEST);
 
     //enable face culling (prevents drawing faces from behind)
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
+    //glEnable(GL_CULL_FACE);
+    //glCullFace(GL_FRONT);
 
     _isWindowOpen = true;
 

@@ -1,12 +1,14 @@
 #version 120
 
-attribute vec3 position;
-attribute vec2 textCoord;
+attribute vec3 _position;
+attribute vec2 _texCoord;
 
-varying vec2 textCoord0;
+uniform mat4 _transform;
+
+varying vec2 texCoord;
 
 void main()
 {
-    gl_Position = vec4(position, 1.0);
-    textCoord0 = textCoord;
+    gl_Position = _transform * vec4(_position, 1.0); //vec4(position, 1.0);
+    texCoord = _texCoord;
 }
