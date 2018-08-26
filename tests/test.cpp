@@ -11,15 +11,16 @@
 
 int main()
 {
-    Display display = Display(300, 300, "Test");
+    Display display = Display(800, 600, "Test");
 
     Vertex vertices[] = {
-        Vertex(glm::vec3(0.0, 0.5, 0.0), glm::vec2(0.5, 1)),
-        Vertex(glm::vec3(-0.5, -0.5, 0.0), glm::vec2(0, 0)),
+        Vertex(glm::vec3(-0.5f, -0.5f, 0.0f), glm::vec2(0, 0)),
+        Vertex(glm::vec3(-0.5f, 0.5f, 0.0), glm::vec2(0, 1)),
+        Vertex(glm::vec3(0.5, 0.5, 0.0), glm::vec2(1, 1)),
         Vertex(glm::vec3(0.5, -0.5, 0.0), glm::vec2(1, 0))
     };
 
-    unsigned int indices[] = { 0, 1, 2 };
+    unsigned int indices[] = { 0, 1, 3, 3, 1, 2 };
 
     Mesh mesh = Mesh(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]));
     Shader shader = Shader("res/basicShader");
@@ -33,10 +34,18 @@ int main()
         1000.0f
     );
 
-    float incrmement = 0.01f;
+    float increment = 0.01f;
+    float count = 0;
     while(display.isWindowOpen())
     {
-        transform.getRot().a += incrmement;
+        count += increment;
+
+        transform.setRot(
+            glm::rotate(increment, glm::vec3(1, 1, 1)) * transform.getRot()
+        );
+        transform.getRot().a += increment;
+
+        camera.setPos(glm::vec3(0, 0, -2 + glm::sin(count)));
 
         display.clear(0.125f, 0.25f, 0.5f, 1.0f);
 
