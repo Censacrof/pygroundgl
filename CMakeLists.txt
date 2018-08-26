@@ -28,6 +28,8 @@ set(LIB_SOURCES
     ${CMAKE_SOURCE_DIR}/lib/Texture.cpp
     ${CMAKE_SOURCE_DIR}/lib/Transform.cpp
     ${CMAKE_SOURCE_DIR}/lib/Camera.cpp
+    
+    ${CMAKE_SOURCE_DIR}/lib/platform/SDL2Window.cpp
 )
 
 

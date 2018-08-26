@@ -2,7 +2,7 @@
 #include <glm/gtx/transform.hpp>
 #include <GL/glew.h>
 
-#include "../lib/Display.h"
+#include "../lib/platform/SDL2Window.h"
 #include "../lib/Mesh.h"
 #include "../lib/Shader.h"
 #include "../lib/Texture.h"
@@ -11,7 +11,8 @@
 
 int main()
 {
-    Display display = Display(800, 600, "Test");
+    SDL2Window window;
+    window.open(800, 600, "Test");
 
     Vertex vertices[] = {
         Vertex(glm::vec3(-0.5f, -0.5f, 0.0f), glm::vec2(0, 0)),
@@ -29,14 +30,14 @@ int main()
     Camera camera = Camera(
         glm::vec3(0, 0, -1),
         90.0f,
-        display.getRatio(),
+        window.getRatio(),
         0.01f,
         1000.0f
     );
 
     float increment = 0.01f;
     float count = 0;
-    while(display.isWindowOpen())
+    while(window.isWindowOpen())
     {
         count += increment;
 
@@ -47,15 +48,17 @@ int main()
 
         camera.setPos(glm::vec3(0, 0, -2 + glm::sin(count)));
 
-        display.clear(0.125f, 0.25f, 0.5f, 1.0f);
+        window.clear(0.125f, 0.25f, 0.5f, 1.0f);
 
         shader.bind();
         shader.update(transform, camera);
         texture.bind(0);
         mesh.draw();
 
-        display.update();
+        window.update();
     }
+
+    window.close();
 
     return 0;
 }
